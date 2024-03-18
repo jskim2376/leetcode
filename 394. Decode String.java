@@ -18,18 +18,20 @@ class Solution {
             } else if (character == '[') {
                 int repeatedRight = i;
                 int repeated = Integer.parseInt(s.substring(repeatedLeft, repeatedRight));
-                // 반복할 문자열의 왼쪽 위치를 구하고, 반복할 값과 위치를 push
-                int repeatedStringLeft = result.length();
-                stack.push(new int[] { repeated, repeatedStringLeft });
+                // encoded_string 왼쪽 위치를 구하고, repeated와 왼쪽 위치를 push
+                int encodedStringLeft = result.length();
+                stack.push(new int[] { repeated, encodedStringLeft });
                 repeatedLeft = -1;
             } else if (character == ']') {
                 // encoded_string을 인코딩된 문자열을 repeated 만큼 반복
                 int[] repeatedAndLeft = stack.pop();
-                int repeated = repeatedAndLeft[0];
                 int left = repeatedAndLeft[1];
                 int right = result.length();
+
+                String encodedString = result.substring(left, right);
+                int repeated = repeatedAndLeft[0];
                 for (int j = 0; j < repeated - 1; j++) {
-                    result.append(result.substring(left, right));
+                    result.append(encodedString);
                 }
                 // 일반문자열이면 결과에 더함
             } else {
